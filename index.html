@@ -198,7 +198,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helv
 // ==================== CONFIG ====================
 // 将此 URL 替换为你的 Google Apps Script 部署 URL
 // 如不配置后端，问卷数据将仅保存在本地浏览器
-const SCRIPT_URL = '';
+const SCRIPT_URL = 'https://formspree.io/f/xzdlyjnj';
 
 // ==================== STATE ====================
 let currentType = '';
@@ -241,6 +241,11 @@ function toast(msg, duration) {
 function checkBackend() {
   var dot = document.getElementById('statusDot');
   var txt = document.getElementById('statusText');
+  if (SCRIPT_URL.includes('formspree.io')) {
+    dot.className = 'dot on';
+    txt.textContent = '在线 | 数据发送至管理员邮箱';
+    return;
+  }
   if (!SCRIPT_URL) {
     dot.className = 'dot off'; txt.textContent = '离线模式（数据保存在本地）';
     return;
@@ -248,9 +253,9 @@ function checkBackend() {
   fetch(SCRIPT_URL)
     .then(r => r.json())
     .then(d => {
-      if (d.code === 0) {
+      if (d.code === 0 || d.ok) {
         dot.className = 'dot on';
-        txt.textContent = '在线 | 已收集 ' + d.total + ' 份问卷';
+        txt.textContent = '在线 | 已收集 ' + (d.total || '') + ' 份问卷';
       } else {
         dot.className = 'dot off'; txt.textContent = '后端异常';
       }
@@ -482,25 +487,28 @@ function submitSurvey() {
   payload.id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 
   if (SCRIPT_URL) {
-    // Submit to Google Sheets backend
+    // Submit to Formspree backend
     document.getElementById('loadingOverlay').style.display = 'flex';
     fetch(SCRIPT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ type: currentType, payload: payload })
+      body: JSON.stringify({ type: currentType, surveyData: payload })
     })
     .then(function(r) { return r.json(); })
     .then(function(d) {
       document.getElementById('loadingOverlay').style.display = 'none';
-      handleSubmitSuccess(payload, d.id || (d.data && d.data.id));
+      if (d.ok || d.code === 0) {
+        handleSubmitSuccess(payload, '已发送至管理员邮箱');
+      } else {
+        saveLocal(currentType, payload);
+        handleSubmitSuccess(payload, null);
+      }
     })
     .catch(function(err) {
       document.getElementById('loadingOverlay').style.display = 'none';
       console.error('Submit error:', err);
-      // Fallback: save locally
       saveLocal(currentType, payload);
       handleSubmitSuccess(payload, null);
-      toast('提交成功！(数据已保存在本地)');
     });
   } else {
     // Local mode
