@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>机电一体化技术专业调研问卷</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background:#f0f4f8; color:#333; line-height:1.6; min-height:100vh; }
+.container { max-width:700px; margin:0 auto; padding:16px; padding-bottom:80px; }
+
+/* Header */
+.header { text-align:center; padding:30px 16px 20px; background:linear-gradient(135deg,#1a6fb5,#2196F3); color:#fff; border-radius:0 0 20px 20px; margin-bottom:20px; }
+.header h1 { font-size:22px; font-weight:700; }
+.header .sub { font-size:13px; opacity:0.85; margin-top:6px; }
+
+/* Cards */
+.cards { display:flex; flex-direction:column; gap:14px; margin-bottom:20px; }
+.card { background:#fff; border-radius:14px; padding:20px; box-shadow:0 2px 12px rgba(0,0,0,0.06); cursor:pointer; transition:transform 0.15s; border-left:5px solid #ccc; display:flex; align-items:center; gap:14px; }
+.card:active { transform:scale(0.98); }
+.card .icon { font-size:40px; flex-shrink:0; }
+.card .info { flex:1; }
+.card .info h3 { font-size:16px; font-weight:700; margin-bottom:4px; }
+.card .info p { font-size:12px; color:#888; line-height:1.5; }
+.card .info .time { font-size:11px; color:#aaa; margin-top:4px; }
+.card .arrow { font-size:24px; color:#ccc; }
+.card.c1 { border-left-color:#1a6fb5; } .card.c1 h3 { color:#1a6fb5; }
+.card.c2 { border-left-color:#27ae60; } .card.c2 h3 { color:#27ae60; }
+.card.c3 { border-left-color:#e67e22; } .card.c3 h3 { color:#e67e22; }
+
+/* Form Area */
+.form-page { display:none; }
+.form-page.active { display:block; }
+
+.section { background:#fff; border-radius:14px; padding:20px; margin-bottom:14px; box-shadow:0 1px 8px rgba(0,0,0,0.04); }
+.section-title { font-size:17px; font-weight:700; color:#1a6fb5; margin-bottom:16px; padding-left:12px; border-left:4px solid #1a6fb5; }
+.section-subtitle { font-size:14px; color:#888; margin-bottom:14px; }
+
+/* Steps */
+.steps { display:flex; justify-content:center; gap:6px; margin-bottom:6px; flex-wrap:wrap; }
+.step-dot { width:30px; height:30px; border-radius:50%; background:#e0e0e0; color:#999; font-size:12px; display:flex; align-items:center; justify-content:center; font-weight:600; }
+.step-dot.done { background:#1a6fb5; color:#fff; }
+.step-dot.cur { background:#2196F3; color:#fff; transform:scale(1.2); }
+.step-line { width:24px; height:2px; background:#e0e0e0; align-self:center; }
+.step-label { text-align:center; font-size:14px; color:#1a6fb5; font-weight:600; margin:4px 0 16px; }
+
+/* Form Items */
+.fitem { margin-bottom:18px; }
+.flabel { font-size:14px; font-weight:600; margin-bottom:8px; display:block; color:#444; }
+.flabel .req { color:#e74c3c; margin-left:2px; }
+.finput, .ftextarea { width:100%; padding:10px 14px; border:1px solid #ddd; border-radius:8px; font-size:14px; background:#fafafa; transition:border-color 0.2s; }
+.finput:focus, .ftextarea:focus { outline:none; border-color:#1a6fb5; background:#fff; }
+.ftextarea { min-height:80px; resize:vertical; }
+.opts { display:flex; flex-wrap:wrap; gap:8px; }
+.opt { padding:8px 16px; border:1px solid #ddd; border-radius:20px; font-size:13px; color:#666; background:#fafafa; cursor:pointer; user-select:none; transition:all 0.15s; white-space:nowrap; }
+.opt.sel { background:#e3f2fd; border-color:#1a6fb5; color:#1a6fb5; font-weight:500; }
+
+/* Rating Table */
+.rtable { overflow-x:auto; -webkit-overflow-scrolling:touch; margin:0 -4px; }
+.rtable-inner { min-width:500px; }
+.rrow { display:flex; border-bottom:1px solid #f0f0f0; }
+.rhead { background:#f5f8fb; font-weight:600; font-size:12px; }
+.rname { flex:2; padding:10px 8px; font-size:13px; display:flex; align-items:center; }
+.rcell { flex:1; padding:10px 4px; text-align:center; font-size:12px; color:#888; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.15s; border-radius:4px; }
+.rcell.checked { background:#1a6fb5; color:#fff; font-weight:500; }
+
+/* Buttons */
+.btn { display:block; width:100%; padding:14px; text-align:center; border-radius:10px; font-size:16px; font-weight:600; border:none; cursor:pointer; transition:opacity 0.2s; }
+.btn:active { opacity:0.85; }
+.btn-primary { background:linear-gradient(135deg,#1a6fb5,#2196F3); color:#fff; }
+.btn-secondary { background:#fff; color:#1a6fb5; border:2px solid #1a6fb5; }
+.btn-success { background:#27ae60; color:#fff; }
+.btn-white { background:#fff; color:#1a6fb5; font-size:14px; }
+.btns { display:flex; gap:12px; margin-top:20px; }
+.btns .btn { flex:1; }
+
+/* Success page */
+.success { text-align:center; padding:50px 20px; }
+.success .check { font-size:80px; margin-bottom:20px; }
+.success h2 { color:#27ae60; margin-bottom:10px; }
+
+/* Back button */
+.back-bar { display:flex; align-items:center; gap:8px; padding:10px 0; color:#1a6fb5; font-size:14px; cursor:pointer; margin-bottom:10px; }
+
+/* Toast */
+.toast { position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#333; color:#fff; padding:12px 24px; border-radius:8px; font-size:14px; z-index:9999; opacity:0; transition:opacity 0.3s; pointer-events:none; }
+.toast.show { opacity:1; }
+
+/* Loading overlay */
+.loading { position:fixed; top:0;left:0;right:0;bottom:0; background:rgba(255,255,255,0.9); z-index:9998; display:flex; align-items:center; justify-content:center; flex-direction:column; }
+.loading .spinner { width:40px;height:40px;border:3px solid #e0e0e0;border-top-color:#1a6fb5;border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:12px; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* Status bar */
+.status-bar { text-align:center; padding:4px 0; font-size:11px; color:#aaa; }
+.status-bar .dot { display:inline-block; width:6px; height:6px; border-radius:50%; margin-right:4px; }
+.status-bar .dot.on { background:#27ae60; }
+.status-bar .dot.off { background:#ccc; }
+
+/* Footer */
+.footer { text-align:center; padding:20px; color:#bbb; font-size:11px; }
+
+/* Copy button */
+.copy-btn { background:#f0f0f0; border:none; padding:6px 12px; border-radius:6px; font-size:12px; cursor:pointer; color:#666; }
+.copy-btn:active { background:#ddd; }
+
+@media (max-width:480px) {
+  .container { padding:10px; }
+  .header { padding:20px 12px 16px; }
+  .section { padding:14px; }
+  .opt { padding:6px 12px; font-size:12px; }
+  .rname { font-size:11px; }
+  .rcell { font-size:10px; padding:8px 2px; }
+}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- ==================== HOME PAGE ==================== -->
+<div id="page-home" class="form-page active">
+  <div class="header">
+    <h1>邯郸职业技术学院</h1>
+    <div class="sub">机电一体化技术专业调研问卷</div>
+    <div style="font-size:11px;opacity:0.7;margin-top:4px;">机电工程系 · 2026年6月</div>
+  </div>
+  <div class="container">
+    <div class="cards">
+      <div class="card c1" onclick="openSurvey('enterprise')">
+        <div class="icon">🏭</div>
+        <div class="info">
+          <h3>企业版调研问卷</h3>
+          <p>面向用人单位，了解人才需求与岗位能力要求</p>
+          <div class="time">⏱ 约10-15分钟</div>
+        </div>
+        <div class="arrow">›</div>
+      </div>
+      <div class="card c2" onclick="openSurvey('graduate')">
+        <div class="icon">🎓</div>
+        <div class="info">
+          <h3>毕业生版跟踪调查问卷</h3>
+          <p>面向2023-2025届毕业生，了解就业与职业发展</p>
+          <div class="time">⏱ 约8-12分钟</div>
+        </div>
+        <div class="arrow">›</div>
+      </div>
+      <div class="card c3" onclick="openSurvey('student')">
+        <div class="icon">📚</div>
+        <div class="info">
+          <h3>在校生版学情调研问卷</h3>
+          <p>面向2024-2025级在校生，了解学习状况与反馈</p>
+          <div class="time">⏱ 约8-12分钟</div>
+        </div>
+        <div class="arrow">›</div>
+      </div>
+    </div>
+    <div class="status-bar"><span class="dot" id="statusDot"></span> <span id="statusText">检查连接中…</span></div>
+    <div class="footer">本问卷数据仅用于专业建设与教学改革分析<br>邯郸职业技术学院 机电工程系 © 2026</div>
+  </div>
+</div>
+
+<!-- ==================== SURVEY FORM PAGES ==================== -->
+<div id="page-survey" class="form-page">
+  <div class="container">
+    <div class="back-bar" onclick="goHome()">← 返回首页</div>
+    <div id="surveyContent"></div>
+  </div>
+</div>
+
+<!-- ==================== SUCCESS PAGE ==================== -->
+<div id="page-success" class="form-page">
+  <div class="container">
+    <div class="success">
+      <div class="check">✅</div>
+      <h2>提交成功！</h2>
+      <p style="color:#888;margin-bottom:20px;" id="successMsg"></p>
+      <p style="color:#aaa;font-size:13px;" id="successId"></p>
+      <div style="margin:24px 0;padding:20px;background:#f9f9f9;border-radius:12px;text-align:left;">
+        <p style="font-weight:600;margin-bottom:12px;">📢 请将问卷链接转发给更多人：</p>
+        <div style="display:flex;gap:8px;">
+          <input id="shareUrl" style="flex:1;padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:13px;" readonly onclick="this.select()">
+          <button class="copy-btn" onclick="copyLink()">复制链接</button>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="goHome()" style="margin-bottom:12px;">填写其他问卷</button>
+      <button class="btn btn-white" onclick="openSurvey(currentType)">再填一份同类型问卷</button>
+    </div>
+  </div>
+</div>
+
+<div id="loadingOverlay" class="loading" style="display:none;">
+  <div class="spinner"></div>
+  <p style="color:#888;">提交中...</p>
+</div>
+
+<script>
+// ==================== CONFIG ====================
+// 将此 URL 替换为你的 Google Apps Script 部署 URL
+// 如不配置后端，问卷数据将仅保存在本地浏览器
+const SCRIPT_URL = '';
+
+// ==================== STATE ====================
+let currentType = '';
+let surveyData = {};
+let currentStep = 0;
+
+// ==================== PAGE NAVIGATION ====================
+function showPage(id) {
+  document.querySelectorAll('.form-page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function openSurvey(type) {
+  currentType = type;
+  currentStep = 0;
+  surveyData = {};
+  buildSurveyForm(type);
+  showPage('page-survey');
+}
+
+function goHome() {
+  currentType = '';
+  currentStep = 0;
+  surveyData = {};
+  showPage('page-home');
+}
+
+// ==================== TOAST ====================
+function toast(msg, duration) {
+  duration = duration || 2000;
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._t);
+  t._t = setTimeout(function(){ t.classList.remove('show'); }, duration);
+}
+
+// ==================== BACKEND CHECK ====================
+function checkBackend() {
+  var dot = document.getElementById('statusDot');
+  var txt = document.getElementById('statusText');
+  if (!SCRIPT_URL) {
+    dot.className = 'dot off'; txt.textContent = '离线模式（数据保存在本地）';
+    return;
+  }
+  fetch(SCRIPT_URL)
+    .then(r => r.json())
+    .then(d => {
+      if (d.code === 0) {
+        dot.className = 'dot on';
+        txt.textContent = '在线 | 已收集 ' + d.total + ' 份问卷';
+      } else {
+        dot.className = 'dot off'; txt.textContent = '后端异常';
+      }
+    }).catch(function(){
+      dot.className = 'dot off'; txt.textContent = '无法连接后端（数据将保存在本地）';
+    });
+}
+
+// ==================== SURVEY CONFIG ====================
+function getSurveyConfig(type) {
+  var configs = {
+    enterprise: {
+      title: '企业版调研问卷',
+      steps: ['企业基本信息','人才需求','知识能力素质评价','岗位需求评价','校企合作意向','意见建议'],
+      stepCount: 6,
+      buildStep: buildEnterpriseStep
+    },
+    graduate: {
+      title: '毕业生版跟踪调查问卷',
+      steps: ['基本信息','就业状况','薪资与职业发展','教育教学反馈','总体评价与建议'],
+      stepCount: 5,
+      buildStep: buildGraduateStep
+    },
+    student: {
+      title: '在校生版学情调研问卷',
+      steps: ['基本信息','学情调查','课程满意度评价','教学方法与实训反馈','学习需求与期望'],
+      stepCount: 5,
+      buildStep: buildStudentStep
+    }
+  };
+  return configs[type];
+}
+
+// ==================== BUILD SURVEY FORM ====================
+function buildSurveyForm(type) {
+  var config = getSurveyConfig(type);
+  renderStep(type, 0, config);
+}
+
+function renderStep(type, step, config) {
+  var html = '<div style="text-align:center;margin-bottom:16px;"><span style="font-size:18px;font-weight:700;color:#1a6fb5;">' + config.title + '</span></div>';
+
+  // Steps indicator
+  html += '<div class="steps">';
+  for (var i = 0; i < config.stepCount; i++) {
+    if (i > 0) html += '<div class="step-line"></div>';
+    var cls = i < step ? 'done' : (i === step ? 'cur' : '');
+    html += '<div class="step-dot ' + cls + '">' + (i < step ? '✓' : (i+1)) + '</div>';
+  }
+  html += '</div>';
+  html += '<div class="step-label">第' + (step+1) + '步：' + config.steps[step] + '</div>';
+
+  // Step content
+  html += config.buildStep(type, step);
+
+  // Buttons
+  html += '<div class="btns">';
+  if (step > 0) {
+    html += '<button class="btn btn-secondary" onclick="prevStep()">上一步</button>';
+  }
+  if (step < config.stepCount - 1) {
+    html += '<button class="btn btn-primary" onclick="nextStep()">下一步</button>';
+  } else {
+    html += '<button class="btn btn-primary" onclick="submitSurvey()">确认提交问卷</button>';
+  }
+  html += '</div>';
+
+  document.getElementById('surveyContent').innerHTML = html;
+  currentStep = step;
+  window.scrollTo(0, 0);
+
+  // Restore saved data
+  restoreStepData(type, step);
+}
+
+function prevStep() {
+  saveStepData(currentType, currentStep);
+  if (currentStep > 0) {
+    var config = getSurveyConfig(currentType);
+    renderStep(currentType, currentStep - 1, config);
+  }
+}
+
+function nextStep() {
+  if (!validateStep(currentType, currentStep)) return;
+  saveStepData(currentType, currentStep);
+  var config = getSurveyConfig(currentType);
+  renderStep(currentType, currentStep + 1, config);
+}
+
+// ==================== DATA PERSISTENCE ====================
+function saveStepData(type, step) {
+  var container = document.getElementById('surveyContent');
+  // Save text inputs
+  var inputs = container.querySelectorAll('input[type="text"], input[type="number"], textarea');
+  for (var i = 0; i < inputs.length; i++) {
+    var name = inputs[i].getAttribute('data-name');
+    if (name) surveyData[name] = inputs[i].value;
+  }
+  // Save radio (single select)
+  var selectedOpts = container.querySelectorAll('.opt.sel[data-multi="0"], .opt.sel:not([data-multi])');
+  for (var j = 0; j < selectedOpts.length; j++) {
+    var n = selectedOpts[j].getAttribute('data-name');
+    var v = selectedOpts[j].getAttribute('data-value');
+    surveyData[n] = v;
+  }
+  // Save checkbox (multi select)
+  var multiNames = {};
+  var allMulti = container.querySelectorAll('.opt.sel[data-multi="1"]');
+  for (var k = 0; k < allMulti.length; k++) {
+    var mn = allMulti[k].getAttribute('data-name');
+    if (!multiNames[mn]) multiNames[mn] = [];
+    multiNames[mn].push(allMulti[k].getAttribute('data-value'));
+  }
+  for (var key in multiNames) {
+    surveyData[key] = multiNames[key];
+  }
+  // Save rating cells
+  var ratedCells = container.querySelectorAll('.rcell.checked');
+  var ratingData = {};
+  for (var l = 0; l < ratedCells.length; l++) {
+    var rn = ratedCells[l].getAttribute('data-name');
+    ratingData[rn] = ratedCells[l].getAttribute('data-value');
+  }
+  if (Object.keys(ratingData).length > 0) {
+    var ratingKey = type === 'enterprise' ? 'p3_ratings' : (type === 'graduate' ? 'p4_ratings' : 'p3_satisfaction');
+    surveyData[ratingKey] = Object.assign(surveyData[ratingKey] || {}, ratingData);
+  }
+}
+
+function restoreStepData(type, step) {
+  setTimeout(function(){
+    var container = document.getElementById('surveyContent');
+    // Restore text inputs
+    var inputs = container.querySelectorAll('input[type="text"], input[type="number"], textarea');
+    for (var i = 0; i < inputs.length; i++) {
+      var name = inputs[i].getAttribute('data-name');
+      if (name && surveyData[name]) inputs[i].value = surveyData[name];
+    }
+    // Restore selection state for all opts
+    var opts = container.querySelectorAll('.opt');
+    for (var j = 0; j < opts.length; j++) {
+      var on = opts[j].getAttribute('data-name');
+      var ov = opts[j].getAttribute('data-value');
+      var isMulti = opts[j].getAttribute('data-multi') === '1';
+      if (isMulti) {
+        if (Array.isArray(surveyData[on]) && surveyData[on].indexOf(ov) > -1) {
+          opts[j].classList.add('sel');
+        }
+      } else {
+        if (surveyData[on] === ov) opts[j].classList.add('sel');
+      }
+    }
+    // Restore rating cells
+    var ratingKey = type === 'enterprise' ? 'p3_ratings' : (type === 'graduate' ? 'p4_ratings' : 'p3_satisfaction');
+    var ratings = surveyData[ratingKey] || {};
+    var cells = container.querySelectorAll('.rcell');
+    for (var k = 0; k < cells.length; k++) {
+      var cn = cells[k].getAttribute('data-name');
+      if (ratings[cn] && ratings[cn] === cells[k].getAttribute('data-value')) {
+        cells[k].classList.add('checked');
+      }
+    }
+  }, 10);
+}
+
+// ==================== VALIDATION ====================
+function validateStep(type, step) {
+  if (type === 'enterprise' && step === 0) {
+    var name = document.querySelector('[data-name="q1_name"]');
+    if (!name || !name.value.trim()) { toast('请填写企业名称'); return false; }
+    if (!surveyData.q2_type && !document.querySelector('[data-name="q2_type"].sel')) { toast('请选择企业性质'); return false; }
+  }
+  if (type === 'graduate' && step === 0) {
+    if (!surveyData.gradYear && !document.querySelector('[data-name="gradYear"].sel')) { toast('请选择毕业年份'); return false; }
+  }
+  if (type === 'student' && step === 0) {
+    if (!surveyData.grade && !document.querySelector('[data-name="grade"].sel')) { toast('请选择年级'); return false; }
+  }
+  return true;
+}
+
+// ==================== EVENT HANDLERS (delegation) ====================
+document.addEventListener('click', function(e) {
+  // Option toggle
+  if (e.target.classList.contains('opt')) {
+    var el = e.target;
+    var isMulti = el.getAttribute('data-multi') === '1';
+    if (isMulti) {
+      el.classList.toggle('sel');
+    } else {
+      // Single select: deselect siblings
+      var name = el.getAttribute('data-name');
+      var parent = el.parentElement;
+      if (parent) {
+        var siblings = parent.querySelectorAll('.opt[data-name="' + name + '"]');
+        for (var i = 0; i < siblings.length; i++) {
+          siblings[i].classList.remove('sel');
+        }
+      }
+      el.classList.toggle('sel');
+    }
+  }
+  // Rating cell
+  if (e.target.classList.contains('rcell')) {
+    var cell = e.target;
+    var name = cell.getAttribute('data-name');
+    var value = cell.getAttribute('data-value');
+    var row = cell.parentElement;
+    if (row) {
+      var cells = row.querySelectorAll('.rcell');
+      for (var j = 0; j < cells.length; j++) {
+        cells[j].classList.remove('checked');
+      }
+    }
+    if (!cell.classList.contains('checked')) {
+      cell.classList.add('checked');
+    }
+  }
+});
+
+// ==================== SUBMIT ====================
+function submitSurvey() {
+  saveStepData(currentType, currentStep);
+
+  if (!confirm('确认提交问卷？提交后将无法修改。')) return;
+
+  var payload = JSON.parse(JSON.stringify(surveyData)); // deep clone
+  payload.id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+
+  if (SCRIPT_URL) {
+    // Submit to Google Sheets backend
+    document.getElementById('loadingOverlay').style.display = 'flex';
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: currentType, payload: payload })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      document.getElementById('loadingOverlay').style.display = 'none';
+      handleSubmitSuccess(payload, d.id || (d.data && d.data.id));
+    })
+    .catch(function(err) {
+      document.getElementById('loadingOverlay').style.display = 'none';
+      console.error('Submit error:', err);
+      // Fallback: save locally
+      saveLocal(currentType, payload);
+      handleSubmitSuccess(payload, null);
+      toast('提交成功！(数据已保存在本地)');
+    });
+  } else {
+    // Local mode
+    saveLocal(currentType, payload);
+    handleSubmitSuccess(payload);
+  }
+}
+
+function handleSubmitSuccess(payload, serverId) {
+  document.getElementById('successMsg').textContent = '您已完成问卷填写，感谢您的宝贵时间和意见！';
+  document.getElementById('successId').textContent = (serverId ? '服务器记录ID: ' + serverId : '数据已保存至本地浏览器');
+  document.getElementById('shareUrl').value = window.location.href;
+  showPage('page-success');
+}
+
+function saveLocal(type, payload) {
+  var all = JSON.parse(localStorage.getItem('survey_data') || '{}');
+  if (!all[type]) all[type] = [];
+  all[type].push({ time: new Date().toISOString(), data: payload });
+  localStorage.setItem('survey_data', JSON.stringify(all));
+}
+
+// ==================== SHARE ====================
+function copyLink() {
+  var input = document.getElementById('shareUrl');
+  input.select();
+  try {
+    document.execCommand('copy');
+    toast('链接已复制，请粘贴发送给他人');
+  } catch(e) {
+    toast('请手动复制链接');
+  }
+}
+
+// ==================== SURVEY STEP BUILDERS ====================
+
+// --- ENTERPRISE ---
+function buildEnterpriseStep(type, step) {
+  var h = '';
+  if (step === 0) {
+    h += s('企业基本信息');
+    h += ti('q1_name', '1. 企业名称 <span class="req">*</span>', '请输入企业全称');
+    h += si('q2_type', '2. 企业性质 <span class="req">*</span>', ['国有企业','民营企业','外资/合资企业','其他']);
+    h += si('q3_scale', '3. 企业规模', ['大型企业（≥1000人）','中型企业（300-999人）','小型企业（＜300人）']);
+    h += si('q4_industry', '4. 所属行业', ['装备制造业','汽车及零部件制造业','电子信息产业','新能源产业','其他']);
+    h += ti('q5_address', '5. 企业地址', '请输入企业地址');
+    h += '<div class="fitem"><span class="flabel">6. 填表人信息</span>';
+    h += ti('q6_contact', '', '姓名', 'margin-bottom:8px;');
+    h += ti('q6_position', '', '职务', 'margin-bottom:8px;');
+    h += ti('q6_phone', '', '联系电话', '');
+    h += '</div>';
+    h += es();
+  }
+  if (step === 1) {
+    h += s('企业人才需求情况');
+    h += si('q7_demand', '1. 未来3年对机电高职层次人才需求', ['无需求','1-5人','6-10人','11-20人','20人以上']);
+    h += mi('q8_edu', '2. 学历层次需求（可多选）', ['中职','高职（大专）','本科','研究生及以上']);
+    h += mi('q9_channel', '3. 招聘渠道（可多选）', ['校园招聘','网络招聘','人才市场','校企合作定向培养','内部推荐','其他']);
+    h += si('q10_salary', '4. 新入职机电类高职毕业生起薪', ['3000元以下','3000-4000元','4000-5000元','5000-6000元','6000元以上']);
+    h += es();
+  }
+  if (step === 2) {
+    h += s('专业知识需求评价');
+    h += '<p class="section-subtitle">请对以下知识的需求程度进行评价：</p>';
+    h += ratingTable('p3_knowledge', ['非常需要','需要','一般需要','不需要'], [
+      '机械制图与CAD绘图知识','电工与电子技术基础知识','电气控制与PLC编程知识',
+      '液压与气动技术知识','工业机器人技术知识','数控编程与加工知识',
+      '智能制造技术知识','单片机与嵌入式系统知识','机电设备故障诊断与维修知识',
+      '生产车间技术与管理知识','人工智能与智能机器人基础知识','机械设计基础知识'
+    ]);
+    h += es();
+    h += s('专业能力需求评价');
+    h += '<p class="section-subtitle">请对以下能力的需求程度进行评价：</p>';
+    h += ratingTable('p3_ability', ['非常需要','需要','一般需要','不需要'], [
+      '机电设备操作能力','机电设备安装与调试能力','机电设备维修与维护能力',
+      '一般机械零部件设计与加工能力','PLC编程与调试能力','工业机器人操作与编程能力',
+      '自动化产线运维能力','简单机电设备局部改造能力','新技术开发应用及创新能力',
+      '智能机器人应用能力'
+    ]);
+    h += es();
+    h += s('综合素质需求评价');
+    h += '<p class="section-subtitle">请对以下素质的需求程度进行评价：</p>';
+    h += ratingTable('p3_quality', ['非常需要','需要','一般需要','不需要'], [
+      '团队协作与沟通能力','诚信爱岗敬业精神','吃苦耐劳奉献精神','安全生产意识',
+      '学习新知识新技术的能力','组织协调能力','计算机应用基础能力','人文素养与职业道德'
+    ]);
+    h += es();
+  }
+  if (step === 3) {
+    h += s('岗位/工种需求评价');
+    h += '<p class="section-subtitle">请对以下岗位的需求程度进行评价：</p>';
+    h += ratingTable('p4_position', ['非常需要','需要','一般需要','不需要'], [
+      '普通机床操作工','机电设备维修工','机械及工艺装备设计',
+      '工业机器人操作员','工业机器人编程员','工业机器人设计员',
+      '工业机器人运维员','智能机器人设计加工员','智能制造自动化产线运维员',
+      '机电设备安装调试员','车间技术管理员','机电设备销售员'
+    ]);
+    h += es();
+  }
+  if (step === 4) {
+    h += s('校企合作意向');
+    h += si('q5_willing', '1. 是否愿意与我院开展校企合作', ['非常愿意','愿意','可以考虑','暂不考虑']);
+    h += mi('q6_mode', '2. 希望的校企合作方式（可多选）', ['订单培养','现代学徒制','岗位实习','共建实训基地','共建课程与教材','企业技术人员到校授课','教师到企业顶岗锻炼','技术研发合作','员工培训']);
+    h += si('q7_intern', '3. 每年可接收机电专业岗位实习学生数量', ['5人以下','5-10人','10-20人','20人以上']);
+    h += si('q8_plan', '4. 是否愿意参与人才培养方案制订', ['非常愿意','愿意','可以考虑','暂不考虑']);
+    h += si('q9_course', '5. 对共建"产业嵌入式"课程的态度', ['非常支持','支持','可以考虑','暂不考虑']);
+    h += es();
+  }
+  if (step === 5) {
+    h += s('意见建议');
+    h += ta('q10_shortage', '1. 您认为我院机电专业毕业生在知识和能力方面还有哪些不足？');
+    h += ta('q11_curriculum', '2. 您对人才培养方案和课程设置有何建议？');
+    h += ta('q12_cooperation', '3. 您对校企深度合作的开展有何建议？');
+    h += ta('q13_future', '4. 您认为未来3-5年机电类行业人才需求将发生哪些变化？');
+    h += es();
+  }
+  return h;
+}
+
+// --- GRADUATE ---
+function buildGraduateStep(type, step) {
+  var h = '';
+  if (step === 0) {
+    h += s('基本信息');
+    h += ti('name', '1. 您的姓名', '请输入姓名');
+    h += si('gender', '2. 性别', ['男','女']);
+    h += si('gradYear', '3. 毕业年份 <span class="req">*</span>', ['2023届','2024届','2025届']);
+    h += si('studentType', '4. 生源类型', ['普通高考','单独招生','3+2中高职衔接','其他']);
+    h += ti('hometown', '5. 生源地', '省份 城市');
+    h += ti('contact', '6. 联系电话/邮箱（选填）', '请输入联系方式');
+    h += es();
+  }
+  if (step === 1) {
+    h += s('就业状况');
+    h += si('empStatus', '1. 目前的就业状态', ['已就业','专升本继续深造','自主创业','应征入伍','待业/求职中','其他']);
+    h += ti('company', '2. 所在单位名称', '请输入单位名称');
+    h += si('companyType', '3. 单位性质', ['国有企业','民营企业','外资/合资企业','机关事业单位','其他']);
+    h += si('industry', '4. 所在行业领域', ['装备制造业','汽车及零部件制造业','电子信息产业','新能源产业','电力行业','建筑行业','其他制造业','服务业','其他']);
+    h += si('position', '5. 目前从事岗位', ['设备操作工','产品质检员','设备安装调试工','设备维修工','工业机器人操作及运维员','机电设备营销与服务','技术管理/工艺设计','其他']);
+    h += si('matchRate', '6. 专业对口程度', ['完全对口','基本对口','有一定关联','不对口']);
+    h += si('workCity', '7. 工作地点', ['邯郸市','河北省内其他城市','省外']);
+    h += es();
+  }
+  if (step === 2) {
+    h += s('薪资水平与职业发展');
+    h += si('salary', '1. 目前月薪水平（税前）', ['3000元以下','3000-4000元','4000-5000元','5000-6000元','6000-8000元','8000-10000元','10000元以上']);
+    h += si('jobChanges', '2. 毕业后更换工作的次数', ['0次（仍在首家企业）','1次','2次','3次及以上']);
+    h += si('positionLevel', '3. 目前的职位层级', ['一线技术操作岗位','技术骨干/班组长','技术管理/工艺设计','车间主任/技术主管','高级技术工人/技师','其他']);
+    h += mi('skillsNeeded', '4. 工作中最需要提升的能力（可多选）', ['专业技能','沟通协作能力','组织管理能力','自主学习能力','创新能力','外语能力','计算机应用能力']);
+    h += si('jobSatisfaction', '5. 对目前工作的整体满意度', ['非常满意','满意','一般','不满意','非常不满意']);
+    h += es();
+  }
+  if (step === 3) {
+    h += s('知识领域重要性评价');
+    h += ratingTable('p4_knowledge', ['非常重要','重要','一般','不重要'], [
+      '机械制图与CAD绘图','电工与电子技术','电气控制与PLC','液压与气动技术',
+      '工业机器人技术','数控编程与加工','智能制造技术','单片机技术',
+      '机电设备故障诊断与维修','人工智能基础知识'
+    ]);
+    h += es();
+    h += s('能力领域重要性评价');
+    h += ratingTable('p4_ability', ['非常重要','重要','一般','不重要'], [
+      '机电设备操作能力','设备安装与调试能力','设备维修与维护能力',
+      'PLC编程与调试能力','工业机器人操作编程能力','自动化产线运维能力',
+      '机械零部件设计加工能力','技术文件阅读与写作能力','团队协作与沟通能力',
+      '自主学习与新技术应用能力'
+    ]);
+    h += es();
+  }
+  if (step === 4) {
+    h += s('总体评价与建议');
+    h += si('overallSatisfaction', '1. 对母校机电专业教育教学的总体满意度', ['非常满意','满意','一般','不满意','非常不满意']);
+    h += ta('helpfulCourses', '2. 在校期间哪些课程对您的工作帮助最大？');
+    h += ta('needImprove', '3. 在校期间还应加强哪些方面的教学和训练？');
+    h += ta('curriculumSuggest', '4. 对专业课程设置和教学方法的改进建议');
+    h += ta('careerSuggest', '5. 对学弟学妹的职业规划和学习建议');
+    h += si('willingHelp', '6. 是否愿意参与母校的人才培养工作', ['非常愿意','愿意','可以考虑','暂不考虑']);
+    h += es();
+  }
+  return h;
+}
+
+// --- STUDENT ---
+function buildStudentStep(type, step) {
+  var h = '';
+  if (step === 0) {
+    h += s('基本信息');
+    h += si('grade', '1. 你的年级 <span class="req">*</span>', ['2024级','2025级']);
+    h += si('gender', '2. 你的性别', ['男','女']);
+    h += si('studentType', '3. 生源类型', ['普通高考','单独招生','3+2中高职衔接','其他']);
+    h += ti('hometown', '4. 生源地', '省份 城市');
+    h += mi('reasonMajor', '5. 选择本专业的原因（可多选）', ['个人兴趣','家人建议','就业前景好','高考分数限制','其他']);
+    h += es();
+  }
+  if (step === 1) {
+    h += s('学情调查');
+    h += si('selfStudyTime', '1. 每周课外自主学习专业课程的时间', ['几乎没有','1-2小时','3-5小时','6-10小时','10小时以上']);
+    h += si('previewHabits', '2. 课前预习情况', ['每门课都预习','大部分课预习','少部分课预习','基本不预习']);
+    h += si('homeworkHabits', '3. 课后复习和作业完成情况', ['按时完成并主动拓展','按时完成','偶尔拖延','经常拖延']);
+    h += mi('helpMethod', '4. 遇到学习困难时的解决方式（可多选）', ['请教任课老师','与同学讨论','自己查阅资料','上网搜索','搁置不管']);
+    h += si('learningStatus', '5. 目前的学习状态', ['积极主动','按部就班','被动应付','比较迷茫']);
+    h += si('majorInterest', '6. 对所学专业的兴趣程度', ['非常感兴趣','比较感兴趣','一般','不太感兴趣','完全没兴趣']);
+    h += si('aiLevel', '7. 对人工智能（AI）技术和工具的了解程度', ['非常了解，经常使用','有一定了解，偶尔使用','听说过但未使用','完全不了解']);
+    h += es();
+  }
+  if (step === 2) {
+    h += s('课程满意度评价');
+    h += '<p class="section-subtitle">请对以下课程的满意度进行评价：</p>';
+    h += ratingTable('p3_satisfaction', ['非常满意','满意','一般','不满意'], [
+      '机械制图与计算机绘图','电工电子技术基础','工程力学','机械设计基础',
+      '液压与气动技术','可编程控制技术与应用（PLC）','运动控制技术与应用',
+      '单片机技术应用','工业机器人应用与编程','数控加工与编程',
+      '智能制造技术','机械产品数字化设计','智能机器人应用',
+      '金工实习','电工电子实训','自动生产线装调实训'
+    ]);
+    h += es();
+  }
+  if (step === 3) {
+    h += s('教学方法与实训条件反馈');
+    h += mi('favTeachMethod', '1. 最喜欢的教学方式（可多选）', ['课堂讲授','现场教学','案例教学','讨论式教学','项目化教学','线上线下混合式教学','实训实操','其他']);
+    h += mi('teachProblems', '2. 目前教学中存在的主要问题（可多选）', ['理论内容太多，实践机会少','教学内容与企业实际脱节','教学方法单一，缺乏互动','课程难度过大，学习吃力','教学进度过快','教学设备陈旧','其他']);
+    h += si('facilitySat', '3. 对校内实训条件的满意度', ['非常满意','满意','一般','不满意','非常不满意']);
+    h += mi('needImproveFacility', '4. 实训教学还需加强的方面（可多选）', ['实训设备数量','实训设备先进性','实训指导教师水平','企业真实项目引入','实训时间安排','实训考核方式']);
+    h += si('internSat', '5. 对校外实习安排的满意度', ['非常满意','满意','一般','不满意','非常不满意','尚未参加']);
+    h += ta('importantCourses', '6. 你认为哪些课程对今后就业最为重要（请列举3-5门）');
+    h += es();
+  }
+  if (step === 4) {
+    h += s('学习需求与期望');
+    h += mi('wantCourses', '1. 希望增设哪些方面的课程（可多选）', ['人工智能与机器视觉','工业互联网','智能机器人技术','3D打印技术','工业数据采集与处理','企业管理与创业']);
+    h += mi('wantCertificates', '2. 最希望考取的职业技能证书（可多选）', ['电工证','工业机器人系统操作员','工业机器人应用编程','可编程控制器系统应用编程','机械产品三维模型设计','数控加工','人工智能训练师']);
+    h += si('afterGraduate', '3. 毕业后的首选去向', ['直接就业','专升本','应征入伍','自主创业','尚未明确']);
+    h += si('expectSalary', '4. 期望的初次就业月薪', ['3000元以下','3000-4000元','4000-5000元','5000-6000元','6000元以上']);
+    h += ta('otherSuggest', '5. 对专业教学和管理的其他意见或建议');
+    h += es();
+  }
+  return h;
+}
+
+// ==================== HTML HELPERS ====================
+function s(title) {
+  return '<div class="section"><div class="section-title">' + title + '</div>';
+}
+function es() { return '</div>'; }
+
+function ti(name, label, placeholder, extraStyle) {
+  extraStyle = extraStyle || '';
+  var html = '<div class="fitem">';
+  if (label) html += '<span class="flabel">' + label + '</span>';
+  html += '<input type="text" class="finput" data-name="' + name + '" placeholder="' + placeholder + '" style="' + extraStyle + '">';
+  html += '</div>';
+  return html;
+}
+
+function ta(name, label) {
+  return '<div class="fitem"><span class="flabel">' + label + '</span><textarea class="ftextarea" data-name="' + name + '" placeholder="请输入..."></textarea></div>';
+}
+
+function si(name, label, options) {
+  var html = '<div class="fitem"><span class="flabel">' + label + '</span><div class="opts">';
+  for (var i = 0; i < options.length; i++) {
+    html += '<span class="opt" data-name="' + name + '" data-value="' + options[i] + '">' + options[i] + '</span>';
+  }
+  html += '</div></div>';
+  return html;
+}
+
+function mi(name, label, options) {
+  var html = '<div class="fitem"><span class="flabel">' + label + '</span><div class="opts">';
+  for (var i = 0; i < options.length; i++) {
+    html += '<span class="opt" data-name="' + name + '" data-value="' + options[i] + '" data-multi="1">' + options[i] + '</span>';
+  }
+  html += '</div></div>';
+  return html;
+}
+
+function ratingTable(name, headers, items) {
+  var html = '<div class="rtable"><div class="rtable-inner"><div class="rrow rhead"><div class="rname">评价内容</div>';
+  for (var h = 0; h < headers.length; h++) {
+    html += '<div class="rcell">' + headers[h] + '</div>';
+  }
+  html += '</div>';
+  for (var i = 0; i < items.length; i++) {
+    html += '<div class="rrow"><div class="rname">' + (i+1) + '. ' + items[i] + '</div>';
+    for (var j = 0; j < headers.length; j++) {
+      html += '<div class="rcell" data-name="' + name + '_k' + i + '" data-value="' + headers[j] + '">' + headers[j] + '</div>';
+    }
+    html += '</div>';
+  }
+  html += '</div></div>';
+  return html;
+}
+
+// ==================== INIT ====================
+window.onload = function() {
+  document.getElementById('shareUrl').value = window.location.href;
+  checkBackend();
+};
+</script>
+
+</body>
+</html>
