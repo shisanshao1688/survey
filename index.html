@@ -487,17 +487,42 @@ function submitSurvey() {
   payload.id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 
   if (SCRIPT_URL) {
-    // Submit to Formspree backend
+    // Submit to Formspree backend (form-encoded)
     document.getElementById('loadingOverlay').style.display = 'flex';
+
+    // Build form-encoded body from payload
+    var formBody = [];
+    formBody.push('survey_type=' + encodeURIComponent(currentType));
+    formBody.push('submitted_at=' + encodeURIComponent(new Date().toLocaleString('zh-CN')));
+    formBody.push('survey_data=' + encodeURIComponent(JSON.stringify(payload)));
+
+    // Add key top-level fields as separate form fields for email readability
+    if (currentType === 'enterprise') {
+      formBody.push('企业名称=' + encodeURIComponent(payload.q1_name || ''));
+      formBody.push('企业性质=' + encodeURIComponent(payload.q2_type || ''));
+      formBody.push('企业规模=' + encodeURIComponent(payload.q3_scale || ''));
+    } else if (currentType === 'graduate') {
+      formBody.push('姓名=' + encodeURIComponent(payload.name || ''));
+      formBody.push('毕业年份=' + encodeURIComponent(payload.gradYear || ''));
+      formBody.push('就业状态=' + encodeURIComponent(payload.empStatus || ''));
+    } else if (currentType === 'student') {
+      formBody.push('年级=' + encodeURIComponent(payload.grade || ''));
+      formBody.push('性别=' + encodeURIComponent(payload.gender || ''));
+      formBody.push('生源类型=' + encodeURIComponent(payload.studentType || ''));
+    }
+
     fetch(SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ type: currentType, surveyData: payload })
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: formBody.join('&')
     })
     .then(function(r) { return r.json(); })
     .then(function(d) {
       document.getElementById('loadingOverlay').style.display = 'none';
-      if (d.ok || d.code === 0) {
+      if (d.ok) {
         handleSubmitSuccess(payload, '已发送至管理员邮箱');
       } else {
         saveLocal(currentType, payload);
